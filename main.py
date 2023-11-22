@@ -1,6 +1,4 @@
-print("test")
+import grid
 
-print("update code test")
-#test
 
-print("throgger")
+print(grid.generate())
