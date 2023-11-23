@@ -1,5 +1,4 @@
 #to the game, each tile is seither a blank or contains a mine
-
 #to the user, each tile is also either flagged, hidden, or revealed
 #revealed tiles also have a number on them which means adjacent mines
 
