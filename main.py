@@ -8,9 +8,19 @@
 
 #0=blank
 #1=mine
-
+  
 #loop for whole game
 while (True): 
+    
+    def dig(x,y):
+        
+        spaceDug = grid[y][x]
+        
+        if spaceDug == 1:
+            return False, True
+        
+        
+        return False, False
     
     #generate grid
     grid =[
@@ -23,10 +33,10 @@ while (True):
     ]
     
     won = False
-    bomb = False
+    lost = False
 
 
-    while (not won and not bomb):
+    while (not won and not lost):
         print(
         "    0 1 2 3 4 5\n\n"+
         "0   ? ? ? ? ? ?\n"+
@@ -38,4 +48,13 @@ while (True):
         )
         x = int(input("dig x(column): "))
         y = int(input("dig y(row): "))
+        
+        won, lost = dig(x,y)
+       
+    if won:
+        input("\n\n\nYou Won. Press ENTER to restart ") 
+    elif lost:
+        input("\n\n\nYou Lost. Press ENTER to restart ") 
+
+        
         
