@@ -8,22 +8,46 @@
 
 #0=blank
 #1=mine
-  
+
+
+def progressToString(progress):
+    s = ("    0 1 2 3 4 5\n\n"+
+        "0   ? ? ? ? ? ?\n"+
+        "1   ? ? ? ? ? ?\n"+
+        "2   ? ? ? ? ? ?\n"+
+        "3   ? ? ? ? ? ?\n"+
+        "4   ? ? ? ? ? ?\n"+
+        "5   ? ? ? ? ? ?\n")
+    return s
+
+
+def countBombsNearby(grid,x,y):
+    return 0
+
+
+def reveal(grid, progress,x,y):
+    #reveal this square
+    progress[y][x] = countBombsNearby(grid, x,y)
+    
+    
+        
+def dig(grid,progress,x,y):
+    
+    spaceDug = grid[y][x]
+    
+    if spaceDug == 1:
+        return False, True
+    else:
+        reveal(grid,progress,x,y)
+    
+    
+    return False, False
+
 #loop for whole game
 while (True): 
     
-    def dig(x,y):
-        
-        spaceDug = grid[y][x]
-        
-        if spaceDug == 1:
-            return False, True
-        
-        
-        return False, False
-    
     #generate grid
-    grid =[
+    g =[
         [0,0,0,0,1,0],
         [0,1,1,0,0,0],
         [0,0,0,0,0,0],
@@ -32,29 +56,30 @@ while (True):
         [0,0,0,0,0,0],
     ]
     
+    # -1 = not revealed
+    # 0-8  = number of bombs adjacent
+    prog=[
+        [-1,-1,-1,-1,-1,-1],
+        [-1,-1,-1,-1,-1,-1],
+        [-1,-1,-1,-1,-1,-1],
+        [-1,-1,-1,-1,-1,-1],
+        [-1,-1,-1,-1,-1,-1],
+        [-1,-1,-1,-1,-1,-1],
+    ]
+    
     won = False
     lost = False
 
 
     while (not won and not lost):
-        print(
-        "    0 1 2 3 4 5\n\n"+
-        "0   ? ? ? ? ? ?\n"+
-        "1   ? ? ? ? ? ?\n"+
-        "2   ? ? ? ? ? ?\n"+
-        "3   ? ? ? ? ? ?\n"+
-        "4   ? ? ? ? ? ?\n"+
-        "5   ? ? ? ? ? ?\n"
-        )
+        print(progressToString(prog))
         x = int(input("dig x(column): "))
         y = int(input("dig y(row): "))
         
-        won, lost = dig(x,y)
+        won, lost = dig(g,prog,x,y)
        
     if won:
         input("\n\n\nYou Won. Press ENTER to restart ") 
     elif lost:
         input("\n\n\nYou Lost. Press ENTER to restart ") 
 
-        
-        
