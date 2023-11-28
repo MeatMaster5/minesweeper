@@ -11,7 +11,8 @@
 
 
 # 11/27/2023 | 7:51 PM | grid reveal needs to reveal adjacent squares idk how to make it do that
-# 11/27/2023 | 12:18 AM | modified 'reveal' function to allow for adjacent squares to be revealed and also lost faith in figuring out how to let the player win
+
+
 
 def progressToString(progress):
 
