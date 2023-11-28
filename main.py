@@ -11,13 +11,24 @@
 
 
 def progressToString(progress):
-    s = ("    0 1 2 3 4 5\n\n"+
-        "0   ? ? ? ? ? ?\n"+
-        "1   ? ? ? ? ? ?\n"+
-        "2   ? ? ? ? ? ?\n"+
-        "3   ? ? ? ? ? ?\n"+
-        "4   ? ? ? ? ? ?\n"+
-        "5   ? ? ? ? ? ?\n")
+
+    s = "    "
+    size = len(progress)
+    for i in range(size):
+        s+=str(i)+" "
+    s+="\n\n"
+    for row in range(size):
+        s+=str(i)+"   "
+        
+        for column in range(size):
+            val = progress[row][column] 
+            if val == -1:
+                s+="□ "
+            elif val == -2:
+                s+="X "
+            else:
+                s+=str(val)+" "
+        s+="\n"
     return s
 
 
@@ -27,7 +38,10 @@ def countBombsNearby(grid,x,y):
 
 def reveal(grid, progress,x,y):
     #reveal this square
-    progress[y][x] = countBombsNearby(grid, x,y)
+    if grid[y][x] == 1:
+        progress[y][x] = -2
+    else:
+        progress[y][x] = countBombsNearby(grid, x,y)
     
     
         
@@ -35,13 +49,12 @@ def dig(grid,progress,x,y):
     
     spaceDug = grid[y][x]
     
+    reveal(grid,progress,x,y)
+    
     if spaceDug == 1:
         return False, True
     else:
-        reveal(grid,progress,x,y)
-    
-    
-    return False, False
+        return False, False
 
 #loop for whole game
 while (True): 
@@ -56,6 +69,7 @@ while (True):
         [0,0,0,0,0,0],
     ]
     
+    # -2 = bomb
     # -1 = not revealed
     # 0-8  = number of bombs adjacent
     prog=[
@@ -78,8 +92,9 @@ while (True):
         
         won, lost = dig(g,prog,x,y)
        
+    print(progressToString(prog))
     if won:
-        input("\n\n\nYou Won. Press ENTER to restart ") 
+        input("You Won. Press ENTER to restart ") 
     elif lost:
-        input("\n\n\nYou Lost. Press ENTER to restart ") 
+        input("You Lost. Press ENTER to restart ") 
 
