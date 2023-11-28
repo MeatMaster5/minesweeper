@@ -18,7 +18,7 @@ def progressToString(progress):
         s+=str(i)+" "
     s+="\n\n"
     for row in range(size):
-        s+=str(i)+"   "
+        s+=str(row)+"   "
         
         for column in range(size):
             val = progress[row][column] 
@@ -31,9 +31,33 @@ def progressToString(progress):
         s+="\n"
     return s
 
+def getBounds(grid,x,y):
+    left = x-1
+    right = x+2
+    if x < 1:
+        left = 0
+    if x > len(grid)-2:
+        right = len(grid)-1
+    below = y-1
+    up = y+2
+    if y < 1:
+        below = 0
+    if y>len(grid)-2:
+        up=len(grid)-1
+    return left,right,below,up
 
-def countBombsNearby(grid,x,y):
-    return 0
+def countBombsNearby(grid,progress,x,y):
+    count = 0
+    left,right,below,up = getBounds(grid,x,y)
+    for column in range(left,right):
+        for row in range(below,up):
+            if row == y and column == x:
+                continue
+            print(row,column)
+            if grid[row][column] == 1:
+                count+=1
+            
+    return count
 
 
 def reveal(grid, progress,x,y):
@@ -41,8 +65,9 @@ def reveal(grid, progress,x,y):
     if grid[y][x] == 1:
         progress[y][x] = -2
     else:
-        progress[y][x] = countBombsNearby(grid, x,y)
-    
+        bombs = countBombsNearby(grid,progress,x,y)
+        progress[y][x] = bombs
+        
     
         
 def dig(grid,progress,x,y):
@@ -62,7 +87,7 @@ while (True):
     #generate grid
     g =[
         [0,0,0,0,1,0],
-        [0,1,1,0,0,0],
+        [0,0,0,0,0,0],
         [0,0,0,0,0,0],
         [0,1,0,0,1,0],
         [0,0,0,1,0,0],
