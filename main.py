@@ -10,9 +10,10 @@
 #1=mine
 
 
-# 11/27/2023 | 7:51 PM | grid reveal needs to reveal adjacent squares idk how to make it do that
-
-
+#------------------------
+# grid reveal needs to reveal adjacent squares idk how to make it do that
+# also add win condition
+#------------------------
 
 def progressToString(progress):
 
