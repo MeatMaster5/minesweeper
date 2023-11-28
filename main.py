@@ -11,8 +11,7 @@
 
 
 # 11/27/2023 | 7:51 PM | grid reveal needs to reveal adjacent squares idk how to make it do that
-
-
+# 11/27/2023 | 12:18 AM | modified 'reveal' function to allow for adjacent squares to be revealed and also lost faith in figuring out how to let the player win
 
 def progressToString(progress):
 
@@ -64,15 +63,23 @@ def countBombsNearby(grid,progress,x,y):
     return count
 
 
-def reveal(grid, progress,x,y):
-    #reveal this square
+def reveal(grid, progress, x, y):
+    if progress[y][x] != -1:
+        return
+
+    #reveal square
     if grid[y][x] == 1:
         progress[y][x] = -2
     else:
-        bombs = countBombsNearby(grid,progress,x,y)
+        bombs = countBombsNearby(grid, progress, x, y)
         progress[y][x] = bombs
-        
-    
+
+        #recursively reveal adjacent squares if the current square has no adjacent bombs
+        if bombs == 0:
+            left, right, below, up = getBounds(grid, x, y)
+            for column in range(left, right):
+                for row in range(below, up):
+                    reveal(grid, progress, column, row)
         
 def dig(grid,progress,x,y):
     
